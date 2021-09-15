@@ -65,6 +65,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             main_text_nodata.setVisibility(View.VISIBLE);
         }
-        Log.d("cek", String.valueOf(list.size()));
     }
 }

@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -72,6 +73,7 @@ public class DetailsActivity extends AppCompatActivity {
                                         intent.putParcelableArrayListExtra("arraylist", list);
                                         startActivity(intent);
                                         finish();
+                                        Toast.makeText(DetailsActivity.this, "Delete Successful", Toast.LENGTH_SHORT).show();
                                     }
                                 }, 2000);
                             }
