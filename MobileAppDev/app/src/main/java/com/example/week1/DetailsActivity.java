@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        final LoadingDialog loadingDialog = new LoadingDialog(DetailsActivity.this);
 
         initView();
 
@@ -53,16 +56,24 @@ public class DetailsActivity extends AppCompatActivity {
 
                 new AlertDialog.Builder(DetailsActivity.this)
                         .setIcon(R.mipmap.ic_launcher)
-                        .setTitle("App")
-                        .setMessage("Apakah kamu yakin?")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setTitle("Delete " + list.get(position).getNama())
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 list.remove(position);
-                                Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
-                                intent.putParcelableArrayListExtra("arraylist", list);
-                                startActivity(intent);
-                                finish();
+                                loadingDialog.startLoadingAnimation();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        loadingDialog.dismissDialog();
+                                        Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
+                                        intent.putParcelableArrayListExtra("arraylist", list);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }, 2000);
                             }
                         })
                         .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

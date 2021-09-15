@@ -105,16 +105,15 @@ public class EditUser extends AppCompatActivity {
 
                     list.add(temp);
 
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("arraylist", list);
-                    startActivity(intent);
-
                     loadingDialog.startLoadingAnimation();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             loadingDialog.dismissDialog();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("arraylist", list);
+                            startActivity(intent);
                             finish();
                         }
                     }, 2000);
